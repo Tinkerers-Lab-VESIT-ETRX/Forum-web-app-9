@@ -1,0 +1,24 @@
+<blockquote id="{{discussion.id}}">
+  <p class="discussion-answer">{{discussion.answer}}</p>
+  <small class="discussion-author">by {{discussion.user.username}}</small>
+
+  {% if user.is_authenticated %}
+    <button class="reply-button" onclick="handleReplyButton({{discussion.id}})">Reply</button>
+  {% endif %}
+
+  <blockquote id="reply-form-container-{{discussion.id}}" class="reply-form-container">
+    <form method="POST" action="/reply" class="reply-form">
+       {% csrf_token %}
+       <input type="hidden" name="forum" value="{{forum.id}}"/>
+       <input type="hidden" name="parent" value="{{discussion.id}}"/>
+       {{reply_form.answer}}
+       <button type="button" class="reply-form-cancel-button" onclick="handleCancelReply({{discussion.id}})">Cancel</button>
+        <input type="submit" class="reply-form-submit-button" value="Reply"/>
+    </form>
+  </blockquote>
+
+  {% for children in discussion.get_discussions %}
+  {% include 'components/discussion.html' with discussion=children %}
+  {% endfor %}
+
+</blockquote>

@@ -1,0 +1,23 @@
+{% extends 'layouts/page.html' %}
+
+{% block content %}
+<div class="page new-forum-page">
+  <h1 class="title">New Forum</h1>
+  
+
+  <form method="POST" action="" class="new-forum-form">  
+    {% csrf_token %}
+    <div class="fieldWrapper">
+      <label for="{{form.topic.id_for_label}}">Topic:</label>
+      {{form.topic}}
+      <span class="error">{{form.topic.errors}}</span>
+    </div>
+    <div class="fieldWrapper">
+      <label for="{{form.description.id_for_label}}">description:</label>
+      {{form.description}}
+      <span class="error">{{form.description.errors}}</span>
+    </div>
+    <input type="submit" value="Submit" class="submit-button"/>
+  </form>
+</div>
+{% endblock %}

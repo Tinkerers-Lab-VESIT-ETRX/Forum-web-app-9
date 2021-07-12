@@ -1,0 +1,21 @@
+{% extends 'layouts/page.html' %}
+
+{% block content %}
+<div class="page">
+	<h1 class="title">All Forums</h1>
+	
+{% for forum in forums %}
+<div class="forum-list-item">
+	<a href="{% url 'forum' forum.id %}">
+		<p class="forum-list-item-topic">
+			{{forum.topic}}
+		</p>
+			<p class="forum-list-item-author">
+				by {{forum.author.username}}
+			</p>
+		</p>
+	</a>
+</div>
+{% endfor %}
+</div>
+{% endblock %}

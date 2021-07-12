@@ -1,0 +1,34 @@
+{% extends 'layouts/page.html' %}
+
+{% block content %}
+<div class="page forum-page">
+	
+	<h2 class="forum-topic">{{forum.topic}}</h2>
+	<p class="forum-description">{{forum.description}}</p>
+	<span class="forum-author">author : {{forum.author.username}}</span>
+
+	<div class="discussions-container">
+  		<h4 class="discussions-container-heading">Discussions</h4>
+
+  		{% if not forum.discussions.all %}
+    	<p class="no-discussions-text">No discussions yet</p>
+  		{% else %}
+  			{% for discussion in forum.get_discussions %}
+  				 {% include 'components/discussion.html' with discussion=discussion %}
+			{% endfor %}
+		{% endif %}
+  	</div>	
+
+	{% if user.is_authenticated %}
+	<form method="POST" action="" class="discussion-form">
+	{% csrf_token %}
+	<div class="fieldWrapper">
+  		<label for="{{discussion_form.answer.id_for_label}}">Your answer:</label>
+  		{{discussion_form.answer}}
+	</div>
+	<input type="submit" value="Send" class="submit-button"/>
+	</form>
+	{% endif %}
+
+</div>
+{% endblock %}
